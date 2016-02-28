@@ -17,7 +17,7 @@
 ![pic url](https://github.com/Asahi-Kuang/picture/blob/master/import.png?raw=true)
 
 
-三. 查询core data中数据。
+五. 查询core data中数据。
 
 ```
 // 查询数据
@@ -38,7 +38,7 @@
     }
 ```
 
-四. 存储数据，给实体新增属性值。
+六. 存储数据，给实体新增属性值。
 
 ```
 // 存储数据
@@ -63,7 +63,7 @@
     }
 ```
 
-五. 删除数据。
+七. 删除数据。
 
 ```
 // 删除数据
