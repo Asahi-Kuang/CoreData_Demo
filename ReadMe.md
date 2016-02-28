@@ -10,6 +10,13 @@
 一. 新建工程勾选Core Data选项框。
 二. 打开`CoreData_Demo.xcdatamodeld`文件。新增实体，取名为“ListItem”。新建实体属性“itemName”，类型为“String”。![pic url](https://github.com/Asahi-Kuang/picture/blob/master/entity.png?raw=true)
 
+三. 给工程项目添加CoreData框架。
+![pic url](https://github.com/Asahi-Kuang/picture/blob/master/framework.png?raw=true)
+
+四. 导入框架框架。
+![pic url](https://github.com/Asahi-Kuang/picture/blob/master/import.png?raw=true)
+
+
 三. 查询core data中数据。
 
 ```
