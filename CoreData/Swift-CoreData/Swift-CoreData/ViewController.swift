@@ -36,11 +36,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         coreDataHandler()
         
     }
+    
+    func getManagedObjectContext() ->NSManagedObjectContext {
+        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        // 获取上下文
+        return delegate.managedObjectContext
+    }
+    
     // 查询数据
     func coreDataHandler() {
-        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        // 获取上下文
-        let context = appdelegate.managedObjectContext
+        let context = getManagedObjectContext()
         // 初始化查询请求
         let request = NSFetchRequest(entityName: "ListItem")
         
@@ -56,8 +61,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // 存储数据
     func storeData(data: String) {
-        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let context = appdelegate.managedObjectContext
+        let context = getManagedObjectContext()
         // 从上下文获取实例
         let entity = NSEntityDescription.entityForName("ListItem", inManagedObjectContext: context)
         // 插入新实体
@@ -69,16 +73,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             // 存储数据
             try context.save()
             listitems.append(item)
+            
         }catch{
             print(error)
         }
+        
         listTableView.reloadData()
     }
     
     // 删除数据
     func deleteData(indexPath: NSIndexPath) {
-        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let context = appdelegate.managedObjectContext
+        let context = getManagedObjectContext()
         // 删除实体对象
         context.deleteObject(self.listitems[indexPath.row])
         // 删除数组对应的实体对象
@@ -89,17 +94,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func addNewItem(sender: UIBarButtonItem) {
         let addNewItemAlert = UIAlertController(title: "Add New Item", message: "Input the new item you want to add.", preferredStyle: .Alert)
-        let completeAction = UIAlertAction(title: "Ok", style: .Default) { (okButton) -> Void in
+        let completeAction = UIAlertAction(title: "Ok", style: .Default) {
+            (okButton) -> Void in
             //
             if addNewItemAlert.textFields!.first!.text != nil {
                 
                 self.storeData(addNewItemAlert.textFields!.first!.text!)
             }
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (cancelButton) -> Void in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) {
+            (cancelButton) -> Void in
             //
         }
-        addNewItemAlert.addTextFieldWithConfigurationHandler { (inputText) -> Void in
+        addNewItemAlert.addTextFieldWithConfigurationHandler {
+            (inputText) -> Void in
             //
             inputText.placeholder = "Input new item name here."
         }
@@ -132,10 +140,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let deleteAction = UITableViewRowAction(style: .Default, title: "删除") { (delete, indexPath) -> Void in
             //
-
             self.deleteData(indexPath)
         }
-        
         deleteAction.backgroundColor = UIColor(red: 41/255.0, green: 202/255.0, blue: 184/255.0, alpha: 1.0)
         return [deleteAction]
     }

@@ -74,12 +74,17 @@ static NSString *const identifier = @"cellIdentifier";
 }
 #pragma mark --
 
-#pragma mark - data handle
+#pragma mark - data handler
+// 获取上下文
+- (NSManagedObjectContext *)getContext {
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    return delegate.managedObjectContext;
+}
+
 // 新增数据 方法
 - (void)addNewItems:(NSString *)newItemName {
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    // 获取上下文
-    NSManagedObjectContext *context = delegate.managedObjectContext;
+    
+    NSManagedObjectContext *context = [self getContext];
     // 初始化core data 实体
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"ListItem" inManagedObjectContext:context];
     NSManagedObject *item = [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:context];
@@ -101,9 +106,7 @@ static NSString *const identifier = @"cellIdentifier";
 
 // 查询数据方法。
 - (void)executeDataItem {
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    // 获取上下文
-    NSManagedObjectContext *context = delegate.managedObjectContext;
+    NSManagedObjectContext *context = [self getContext];
     // 初始化查询请求。
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ListItem"];
     NSError *__autoreleasing error = nil;
@@ -121,8 +124,7 @@ static NSString *const identifier = @"cellIdentifier";
 }
 
 - (void)deleteDataItemAtIndexPath:(NSIndexPath *)indexPath {
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    NSManagedObjectContext *context = delegate.managedObjectContext;
+    NSManagedObjectContext *context = [self getContext];
     
     // 从上下文中删除对象
     [context deleteObject:self.listItems[indexPath.row]];
