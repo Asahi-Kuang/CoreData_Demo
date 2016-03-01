@@ -131,7 +131,7 @@ static NSString *const identifier = @"cellIdentifier";
     // 移除数组中对应的实体对象。
     [self.listItems removeObjectAtIndex:indexPath.row];
 
-    [self.listTableView reloadData];
+    [self.listTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 #pragma mark --
 
